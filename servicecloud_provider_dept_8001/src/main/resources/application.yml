@@ -1,0 +1,38 @@
+server:
+  port: 8001
+
+mybatis:
+  config-location: classpath:mybatis/mybatis.xml      #mybatis配置文件路径
+  type-aliases-package: com.spring.springcloud.entity    #所有entity实体类路径
+  mapper-locations: classpath:mybatis/mapper/**/*.xml    #映射mapper所有的文件
+
+spring:
+  application:
+    name: dept             #对曝光的微服务的名称
+
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource          #连接数据库源的类型
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/cloud1
+    username: root
+    password: root
+    dbcp2:
+      min-idle: 6           #最小连接数
+      max-idle: 6           #最大连接数
+      initial-size: 6       #初始化连接数
+      max-wait-millis: 200   #等待获取连接最大超时时间
+eureka:
+  client:     #客户端注册进行eureka服务列表
+    service-url:
+      #defaultZone: http://localhost:7001/eureka    #入驻的地址必须与7001 de faultZone地址一致
+      defaultZone: http://eureka7001.com:7001/eureka/,http://eureka7002.com:7002/eureka/
+      #defaultZone: http://localhost:7002/eureka/,http://localhost:7001/eureka/
+  instance:
+    instance-id: microserivcecloud-dept8001
+    prefer-ip-address: true     #访问路径显示IP地址
+
+info:     #追加微服务信息的描述
+  app.name: serivcecloud   #工程名称
+  company.name: www.ch.com    #公司名称
+  bulid.artifactId: ${project.artifactId}  #灵活的调用在父工程有配置build
+  build.version: ${project.version}

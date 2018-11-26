@@ -1,0 +1,27 @@
+server:
+  port: 9527
+spring:
+  application:
+    name: dept-zuul
+eureka:
+  client:     #客户端注册进行eureka服务列表
+    service-url:
+      #defaultZone: http://localhost:7001/eureka    #入驻的地址必须与7001 de faultZone地址一致
+      defaultZone: http://eureka7001.com:7001/eureka/,http://eureka7002.com:7002/eureka/
+      #defaultZone: http://localhost:7002/eureka/,http://localhost:7001/eureka/
+  instance:
+    instance-id: zuul-9527.com
+    prefer-ip-address: true     #访问路径显示IP地址
+
+zuul:
+ prefix: /spring
+ ignored-services: "*"
+ routes:
+   mydept.serviceId: dept
+   mydept.path:  /mydept/**
+
+info:     #追加微服务信息的描述
+  app.name: serivcecloud   #工程名称
+  company.name: www.ch.com    #公司名称
+  bulid.artifactId: ${project.artifactId}  #灵活的调用在父工程有配置build
+  build.version: ${project.version}
